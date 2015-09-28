@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DemoNeuralNetwork.LearningAlgorithms
+{
+	public class BackPropagationLearningAlgorithm : LearningAlgorithm
+	{
+		protected double _nuy = 0.5;
+		double[] e;
+
+
+		public double Nuy
+		{
+			get { return _nuy; }
+			set { _nuy = (value > 0) ? value : _nuy; }
+		}
+
+		public BackPropagationLearningAlgorithm(NeuralNetwork nn) : base(nn)
+		{
+		}
+
+		public override void Learn(List<List<double>> inputs, List<List<double>> expected_outputs)
+		{
+			base.Learn(inputs, expected_outputs);
+
+			int iter = 0;
+			do
+			{
+				_error = 0;
+				e = new double[nn.N_Outputs];
+				for(int i = 0; i < inputs.Count; i++)
+				{
+					double err = 0;
+					nn.CreateInput(inputs[i]);
+					List<double> nout = nn.GetOutput();
+					for(int j = 0; j < nout.Count; j++)
+					{
+						e[j] = Outputs[i][j] - nout[j];
+						err += e[j] * e[j];
+					}
+					err /= 2;
+					_error += err;
+
+					ComputeDelta();
+					setWeight(i);
+				}
+
+				iter++;
+			} while (iter < MaxIteration && this.Error > ErrorTreshold);
+		}
+
+		void ComputeDelta()
+		{
+			int l = nn.Count - 1;
+
+			// for output layer
+			for(int i = 0; i < nn.N_Outputs; i++)
+			{
+				nn[l][i].Delta = nn[l][i].OutputPrime * e[i];
+			}
+
+			// for other layer
+			for (l--; l >= 0; l--)
+			{
+				for (int j = 0; j < nn[l].Count; j++)
+				{
+					double sk = 0;
+					for (int k = 0; k < nn[l + 1].Count; k++)
+						sk += nn[l + 1][k].Delta * nn[l + 1][k].InputAxons[j].Weight;
+					nn[l][j].Delta = nn[l][j].OutputPrime * sk;
+				}
+			}
+		}
+
+		void setWeight(int index)
+		{
+			for (int i = 1; i < nn.Count; i++)
+			{
+				Layer layer = nn[i];
+				for(int j = 0; j < layer.Count; j++)
+				{
+					Neuron neuron = layer[j];
+					foreach(Axon ax in neuron.InputAxons)
+					{
+						ax.Weight += _nuy * neuron.Delta * ax.InputNeuron.Value;
+					}
+				}
+			}
+		}
+	}
+}
