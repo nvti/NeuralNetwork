@@ -11,6 +11,9 @@ namespace DemoNeuralNetwork.ActivationFunction
 	/// </summary>
 	public class SigmoidFunction : IActivationFunction
 	{
+		/// <summary>
+		/// Beta param of Sigmoid Function
+		/// </summary>
 		double beta = 1;
 		public double Beta
 		{

@@ -1,9 +1,5 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DemoNeuralNetwork
 {
@@ -33,16 +29,16 @@ namespace DemoNeuralNetwork
 			nn.Learn(inputs, outputs);
 
 			nn.CreateInput(new List<double> { 0, 0 });
-			Console.WriteLine("Output: {0}", nn.GetOutput()[0]);
+			Console.WriteLine("Output: {0}", nn.Outputs[0]);
 
 			nn.CreateInput(new List<double> { 0, 1 });
-			Console.WriteLine("Output: {0}", nn.GetOutput()[0]);
+			Console.WriteLine("Output: {0}", nn.Outputs[0]);
 
 			nn.CreateInput(new List<double> { 1, 0 });
-			Console.WriteLine("Output: {0}", nn.GetOutput()[0]);
+			Console.WriteLine("Output: {0}", nn.Outputs[0]);
 
 			nn.CreateInput(new List<double> { 1, 1 });
-			Console.WriteLine("Output: {0}", nn.GetOutput()[0]);
+			Console.WriteLine("Output: {0}", nn.Outputs[0]);
 			Console.ReadLine();
 		}
 	}

@@ -13,9 +13,13 @@ namespace DemoNeuralNetwork
 		#endregion
 
 		#region Public Properties
-		public Layer PreLayer { set; get; }
+		/// <summary>
+		/// Pre Layer of this layer
+		/// </summary>
 		public string Id { get; set; }
-
+		/// <summary>
+		/// Number of Neuron on this layer
+		/// </summary>
 		public int N_Neurons
 		{
 			get
@@ -25,30 +29,32 @@ namespace DemoNeuralNetwork
 		}
 		#endregion
 
-		public Layer(string Id)
+		#region Construction
+		/// <summary>
+		/// Create new Layer
+		/// </summary>
+		Layer(string Id)
 		{
 			this.Id = Id;
-#if DEBUG_
+#if DEBUG_BUILD_NN
 			Console.WriteLine("Layer ID : " + Id);
 #endif
 		}
+
 		/// <summary>
-		/// 
+		/// Create Hiden/Output Layer
 		/// </summary>
-		/// <param name="pre"></param>
-		/// <param name="nn"></param>
-		public Layer(string Id, int nn, Layer pre, Random Rand) : this(Id)
+		/// <param name="preLayer">Pre Layer</param>
+		/// <param name="nn">Number of Neuron on this layer</param>
+		public Layer(string Id, int nn, Layer preLayer, Random Rand) : this(Id)
 		{
-			PreLayer = pre;
 			for (int i = 0; i < nn; i++)
 			{
 				Neuron n = new Neuron(Id + "_" + i);
-				foreach(Neuron pren in PreLayer)
+				foreach(Neuron preNeuron in preLayer)
 				{
-					Axon ax = new Axon(pren.Id + "->" + n.Id, Rand);
-					ax.InputNeuron = pren;
-					ax.OutputNeuron = n;
-#if DEBUG_
+					Axon ax = new Axon(preNeuron.Id + "->" + n.Id, Rand, preNeuron, n);
+#if DEBUG_BUILD_NN
 					ax.Print();
 #endif
 					n.Add(ax);
@@ -56,6 +62,7 @@ namespace DemoNeuralNetwork
 				this.Add(n);
 			}
 		}
+
 		/// <summary>
 		/// Create Input Layer
 		/// </summary>
@@ -68,6 +75,7 @@ namespace DemoNeuralNetwork
 				this.Add(n);
 			}
 		}
+		#endregion
 
 		public void Reset()
 		{

@@ -14,9 +14,11 @@ namespace DemoNeuralNetwork
 	{
 		#region Public Properties
 		public double InputValue { get; set; }
-		public double Target { get; set; }
 		public string Id { get; set; }
 		public bool IsInputChanged { get; set; }
+		/// <summary>
+		/// Get Output of Neuron
+		/// </summary>
 		public double Value
 		{
 			get
@@ -32,7 +34,9 @@ namespace DemoNeuralNetwork
 				return this.af.OutputPrime(ws);
 			}
 		}
-
+		/// <summary>
+		/// Get Number of Input
+		/// </summary>
 		public int N_Inputs
 		{
 			get
@@ -63,18 +67,21 @@ namespace DemoNeuralNetwork
 		{
 			IsInputChanged = true;
 			this.Id = Id;
-#if DEBUG_
+#if DEBUG_BUILD_NN
 			Console.WriteLine("\tNeuron ID : " + Id);
 #endif
 			InputValue = 0;
 			af = new SigmoidFunction();
 		}
-
+		/// <summary>
+		/// Create new Neuron with fixed Activation Function
+		/// </summary>
+		/// <param name="af">Activation function</param>
 		public Neuron(string Id, IActivationFunction af)
 		{
 			IsInputChanged = true;
 			this.Id = Id;
-#if DEBUG_
+#if DEBUG_BUILD_NN
 			Console.WriteLine("\tNeuron ID : " + Id);
 #endif
 			InputValue = 0;
@@ -88,9 +95,9 @@ namespace DemoNeuralNetwork
 		}
 
 		/// <summary>
-		/// 
+		/// Calaulate Output of Neuron
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>Output of Neuron</returns>
 		double CalculateOutput()
 		{
 			double result;
@@ -101,10 +108,11 @@ namespace DemoNeuralNetwork
 			else
 			{
 				ws = this.Sum(a => a.Weight * a.InputNeuron.Value);
-				result = af.Output(ws);
+				if (af == null) result = ws;
+				else result = af.Output(ws);
 			}
-            
-#if DEBUG_
+
+#if DEBUG_BUILD_NN
 			Console.WriteLine("Neuron ID : " + Id);
 			Console.WriteLine("\tSum of inputs: {0}", ws);
 			Console.WriteLine("\tValue: {0}", result);

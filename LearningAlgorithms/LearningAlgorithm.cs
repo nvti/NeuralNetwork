@@ -13,8 +13,8 @@ namespace DemoNeuralNetwork.LearningAlgorithms
 		protected double _error = -1;
 		protected int _maxIteration = 1000;
 
-		public List<List<double>> Inputs { get; set; }
-		public List<List<double>> Outputs { get; set; }
+		protected List<List<double>> Inputs { get; set; }
+		protected List<List<double>> Outputs { get; set; }
 
 		public int MaxIteration
 		{
@@ -36,6 +36,12 @@ namespace DemoNeuralNetwork.LearningAlgorithms
 			this.nn = nn;
 		}
 
+		/// <summary>
+		/// To train the neuronal network on data.
+		/// inputs[n] represents an input vector of the neural network and expected_outputs[n] the expected ouput for this vector.
+		/// </summary>
+		/// <param name="inputs">Input matrix</param>
+		/// <param name="expected_outputs">Expected Output matrix</param>
 		public virtual void Learn(List<List<double>> inputs, List<List<double>> expected_outputs)
 		{
 			if (inputs.Count < 1)

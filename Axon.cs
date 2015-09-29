@@ -13,9 +13,15 @@ namespace DemoNeuralNetwork
 		public Neuron InputNeuron { set; get; }
 		public string Id { get; set; }
 
-		public Axon(string Id)
+		#region Construction
+		Axon(string Id)
 		{
 			this.Id = Id;
+		}
+		Axon(string Id, Neuron input, Neuron output) : this(Id)
+		{
+			InputNeuron = input;
+			OutputNeuron = output;
 		}
 		public Axon(string Id, Random rand) : this(Id)
 		{
@@ -27,6 +33,20 @@ namespace DemoNeuralNetwork
 			Weight = w;
 		}
 
+		public Axon(string Id, Random rand, Neuron input, Neuron output) : this(Id, input, output)
+		{
+			Weight = rand.NextDouble() * 2 - 1;     // [-1, 1]
+		}
+
+		public Axon(string Id, double w, Neuron input, Neuron output) : this(Id, input, output)
+		{
+			Weight = w;
+		}
+		#endregion
+
+		/// <summary>
+		/// For debug
+		/// </summary>
 		public void Print()
 		{
 			Console.WriteLine("\t\tAxon ID : " + Id);

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DemoNeuralNetwork.ActivationFunction
 {
+	/// <summary>
+	/// Interface of every activation function
+	/// </summary>
 	public interface IActivationFunction
 	{
 		double Output(double x);
