@@ -43,7 +43,7 @@ namespace DemoNeuralNetwork
 #if DEBUG_
 					ax.Print();
 #endif
-					n.InputAxons.Add(ax);
+					n.Add(ax);
 				}
 				this.Add(n);
 			}

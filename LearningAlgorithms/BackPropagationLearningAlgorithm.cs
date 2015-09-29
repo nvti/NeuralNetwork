@@ -69,7 +69,7 @@ namespace DemoNeuralNetwork.LearningAlgorithms
 				{
 					double sk = 0;
 					for (int k = 0; k < nn[l + 1].Count; k++)
-						sk += nn[l + 1][k].Delta * nn[l + 1][k].InputAxons[j].Weight;
+						sk += nn[l + 1][k].Delta * nn[l + 1][k][j].Weight;
 					nn[l][j].Delta = nn[l][j].OutputPrime * sk;
 				}
 			}
@@ -83,7 +83,7 @@ namespace DemoNeuralNetwork.LearningAlgorithms
 				for(int j = 0; j < layer.Count; j++)
 				{
 					Neuron neuron = layer[j];
-					foreach(Axon ax in neuron.InputAxons)
+					foreach(Axon ax in neuron)
 					{
 						ax.Weight += _nuy * neuron.Delta * ax.InputNeuron.Value;
 					}

@@ -10,10 +10,9 @@ namespace DemoNeuralNetwork
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Neuron
+	public class Neuron : List<Axon>
 	{
 		#region Public Properties
-		public List<Axon> InputAxons { get; set; }
 		public double InputValue { get; set; }
 		public double Target { get; set; }
 		public string Id { get; set; }
@@ -31,6 +30,14 @@ namespace DemoNeuralNetwork
 			get
 			{
 				return this.af.OutputPrime(ws);
+			}
+		}
+
+		public int N_Input
+		{
+			get
+			{
+				return Count;
 			}
 		}
 		/// <summary>
@@ -60,7 +67,6 @@ namespace DemoNeuralNetwork
 			Console.WriteLine("\tNeuron ID : " + Id);
 #endif
 			InputValue = 0;
-			InputAxons = new List<Axon>();
 			af = new SigmoidFunction();
 		}
 
@@ -72,7 +78,6 @@ namespace DemoNeuralNetwork
 			Console.WriteLine("\tNeuron ID : " + Id);
 #endif
 			InputValue = 0;
-			InputAxons = new List<Axon>();
 			this.af = af;
 		}
 		#endregion
@@ -89,13 +94,13 @@ namespace DemoNeuralNetwork
 		double CalculateOutput()
 		{
 			double result;
-			if(InputAxons.Count == 0)
+			if(this.Count == 0)
 			{
 				result = ws = InputValue;
 			}
 			else
 			{
-				ws = InputAxons.Sum(a => a.Weight * a.InputNeuron.Value);
+				ws = this.Sum(a => a.Weight * a.InputNeuron.Value);
 				result = af.Output(ws);
 			}
             
