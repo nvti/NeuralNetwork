@@ -33,7 +33,7 @@ namespace DemoNeuralNetwork
 			}
 		}
 
-		public int N_Input
+		public int N_Inputs
 		{
 			get
 			{

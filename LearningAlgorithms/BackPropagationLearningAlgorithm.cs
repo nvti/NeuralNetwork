@@ -36,7 +36,7 @@ namespace DemoNeuralNetwork.LearningAlgorithms
 					double err = 0;
 					nn.CreateInput(inputs[i]);
 					List<double> nout = nn.GetOutput();
-					for(int j = 0; j < nout.Count; j++)
+					for(int j = 0; j < nn.N_Outputs; j++)
 					{
 						e[j] = Outputs[i][j] - nout[j];
 						err += e[j] * e[j];
@@ -54,7 +54,7 @@ namespace DemoNeuralNetwork.LearningAlgorithms
 
 		void ComputeDelta()
 		{
-			int l = nn.Count - 1;
+			int l = nn.N_Layers - 1;
 
 			// for output layer
 			for(int i = 0; i < nn.N_Outputs; i++)
@@ -65,10 +65,10 @@ namespace DemoNeuralNetwork.LearningAlgorithms
 			// for other layer
 			for (l--; l >= 0; l--)
 			{
-				for (int j = 0; j < nn[l].Count; j++)
+				for (int j = 0; j < nn[l].N_Neurons; j++)
 				{
 					double sk = 0;
-					for (int k = 0; k < nn[l + 1].Count; k++)
+					for (int k = 0; k < nn[l + 1].N_Neurons; k++)
 						sk += nn[l + 1][k].Delta * nn[l + 1][k][j].Weight;
 					nn[l][j].Delta = nn[l][j].OutputPrime * sk;
 				}
@@ -77,10 +77,10 @@ namespace DemoNeuralNetwork.LearningAlgorithms
 
 		void setWeight(int index)
 		{
-			for (int i = 1; i < nn.Count; i++)
+			for (int i = 1; i < nn.N_Layers; i++)
 			{
 				Layer layer = nn[i];
-				for(int j = 0; j < layer.Count; j++)
+				for(int j = 0; j < layer.N_Neurons; j++)
 				{
 					Neuron neuron = layer[j];
 					foreach(Axon ax in neuron)

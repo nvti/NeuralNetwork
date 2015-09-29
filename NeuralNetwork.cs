@@ -24,6 +24,14 @@ namespace DemoNeuralNetwork
 				return this[N_Layer - 1].Count;
 			}
 		}
+
+		public int N_Layers
+		{
+			get
+			{
+				return Count;
+			}
+		}
 		#endregion
 
 		#region Protected Properties

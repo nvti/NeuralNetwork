@@ -15,6 +15,14 @@ namespace DemoNeuralNetwork
 		#region Public Properties
 		public Layer PreLayer { set; get; }
 		public string Id { get; set; }
+
+		public int N_Neurons
+		{
+			get
+			{
+				return Count;
+			}
+		}
 		#endregion
 
 		public Layer(string Id)
