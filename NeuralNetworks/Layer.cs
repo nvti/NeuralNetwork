@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace DemoNeuralNetwork.NeuralNetworks
 {
-	public class Layer : List<Neuron>
+	public class Layer : List<Neuron>, IElement
 	{
 		#region Protected Properties
 		
 		#endregion
 
 		#region Public Properties
-		/// <summary>
-		/// Pre Layer of this layer
-		/// </summary>
+
 		public string Id { get; set; }
 		/// <summary>
 		/// Number of Neuron on this layer

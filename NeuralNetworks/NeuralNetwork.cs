@@ -7,9 +7,12 @@ using DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms;
 
 namespace DemoNeuralNetwork.NeuralNetworks
 {
-	public class NeuralNetwork : List<Layer>
+	public class NeuralNetwork : List<Layer>, IElement
 	{
 		#region Public properties
+
+		public string Id { get; set; }
+
 		/// <summary>
 		/// Get number of Input
 		/// </summary>

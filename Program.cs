@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DemoNeuralNetwork.NeuralNetworks;
 
 namespace DemoNeuralNetwork
 {

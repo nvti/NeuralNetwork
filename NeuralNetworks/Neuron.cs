@@ -10,7 +10,7 @@ namespace DemoNeuralNetwork.NeuralNetworks
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Neuron : List<Axon>
+	public class Neuron : List<Axon>, IElement
 	{
 		#region Public Properties
 		public double InputValue { get; set; }
