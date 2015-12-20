@@ -13,6 +13,14 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		public Neuron InputNeuron { set; get; }
 		public string Id { get; set; }
 
+		public double Value
+		{
+			get
+			{
+				return Weight * InputNeuron.Value;
+			}
+		}
+		
 		#region Construction
 		Axon(string Id)
 		{
@@ -44,13 +52,17 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		}
 		#endregion
 
+
 		/// <summary>
 		/// For debug
 		/// </summary>
-		public void Print()
+		public string PrintInfo()
 		{
-			Console.WriteLine("\t\tAxon ID : " + Id);
-			Console.WriteLine("\t\t\tWeight : " + Weight);
+			string s = "";
+			s += "\t\tAxon ID : " + Id + '\n';
+			s += "\t\t\tWeight : " + Weight + '\n';
+
+			return s;
 		}
 	}
 }

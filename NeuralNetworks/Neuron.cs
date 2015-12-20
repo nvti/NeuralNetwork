@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DemoNeuralNetwork.NeuralNetworks.ActivationFunction;
+using DemoNeuralNetwork.NeuralNetworks.ActivationFunctions;
 
 namespace DemoNeuralNetwork.NeuralNetworks
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Neuron : List<Axon>, IElement
+	public class Neuron : Element<Axon>
 	{
 		#region Public Properties
 		public double InputValue { get; set; }
-		public string Id { get; set; }
 		public bool IsInputChanged { get; set; }
 		/// <summary>
 		/// Get Output of Neuron
@@ -23,7 +22,7 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		{
 			get
 			{
-				return _value = IsInputChanged ? CalculateOutput() : _value;
+				return _value = IsInputChanged ? Calculate() : _value;
 			}
 		}
 
@@ -54,7 +53,7 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// <summary>
 		/// Activation Function
 		/// </summary>
-		protected IActivationFunction af = null;
+		protected ActivationFunction af = null;
 		protected double _value;
 		/// <summary>
 		/// Sum of input
@@ -63,33 +62,20 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		#endregion
 
 		#region Construction
-		public Neuron(string Id)
-		{
-			IsInputChanged = true;
-			this.Id = Id;
-#if DEBUG_BUILD_NN
-			Console.WriteLine("\tNeuron ID : " + Id);
-#endif
-			InputValue = 0;
-			af = new SigmoidFunction();
-		}
 		/// <summary>
 		/// Create new Neuron with fixed Activation Function
 		/// </summary>
 		/// <param name="af">Activation function</param>
-		public Neuron(string Id, IActivationFunction af)
+		public Neuron(string Id, ActivationFunc af = ActivationFunc.SIDMOID)
 		{
 			IsInputChanged = true;
 			this.Id = Id;
-#if DEBUG_BUILD_NN
-			Console.WriteLine("\tNeuron ID : " + Id);
-#endif
-			InputValue = 0;
-			this.af = af;
+
+			this.af = ActivationFunction.Create(af);
 		}
 		#endregion
 
-		public void Reset()
+		public override void Reset()
 		{
 			IsInputChanged = true;
 		}
@@ -98,7 +84,7 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// Calaulate Output of Neuron
 		/// </summary>
 		/// <returns>Output of Neuron</returns>
-		double CalculateOutput()
+		double Calculate()
 		{
 			double result;
 			if(this.Count == 0)
@@ -112,13 +98,22 @@ namespace DemoNeuralNetwork.NeuralNetworks
 				else result = af.Output(ws);
 			}
 
-#if DEBUG_BUILD_NN
-			Console.WriteLine("Neuron ID : " + Id);
-			Console.WriteLine("\tSum of inputs: {0}", ws);
-			Console.WriteLine("\tValue: {0}", result);
-#endif
 			IsInputChanged = false;
 			return result;
+		}
+
+		public override string PrintInfo()
+		{
+			string s = "";
+			s += "\tID: " + Id + "\n";
+			s += "\tValue: " + Value + '\n';
+			s += "\tInput value: " + InputValue + '\n';
+
+			foreach(Axon ax in this)
+			{
+				s += ax.PrintInfo();
+			}
+			return s;
 		}
 	}
 }

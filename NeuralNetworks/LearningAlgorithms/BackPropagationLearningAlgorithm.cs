@@ -16,7 +16,7 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 		/// <summary>
 		/// List of error
 		/// </summary>
-		double[] e;
+		//double[] e;
 
 		/// <summary>
 		/// Get/set nuy param of Back Propagation Learning Algorithm
@@ -27,6 +27,10 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 			set { _nuy = (value > 0) ? value : _nuy; }
 		}
 
+		public BackPropagationLearningAlgorithm() : base()
+		{
+
+		}
 		public BackPropagationLearningAlgorithm(NeuralNetwork nn) : base(nn)
 		{
 		}
@@ -35,36 +39,33 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 		/// To train the neuronal network on data.
 		/// inputs[n] represents an input vector of the neural network and expected_outputs[n] the expected ouput for this vector.
 		/// </summary>
-		/// <param name="inputs">Input matrix</param>
-		/// <param name="expected_outputs">Expected Output matrix</param>
-		public override void Learn(List<List<double>> inputs, List<List<double>> expected_outputs)
+		public override void Learn()
 		{
-			base.Learn(inputs, expected_outputs);
-
-			int iter = 0;
 			do
 			{
-				_error = 0;
-				e = new double[nn.N_Outputs];
-				for(int i = 0; i < inputs.Count; i++)
-				{
-					double err = 0;
-					nn.CreateInput(inputs[i]);
-					List<double> nout = nn.Outputs;
-					for(int j = 0; j < nn.N_Outputs; j++)
-					{
-						e[j] = Outputs[i][j] - nout[j];
-						err += e[j] * e[j];
-					}
-					err /= 2;
-					_error += err;
+				LearnStep();
+			} while (Iter < MaxIteration && this.Error > ErrorThreshold);
+		}
 
-					ComputeDelta();
-					setWeight();
-				}
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void LearnStep()
+		{
+			this.Error = 0;
+			for (int i = 0; i < Inputs.Count; i++)
+			{
+				NN.CreateInput(Inputs[i]);
 
-				iter++;
-			} while (iter < MaxIteration && this.Error > ErrorTreshold);
+				double err = Per.Error(NN.Outputs, Outputs[i]);
+
+				this.Error += err;
+
+				ComputeDelta();
+				setWeight();
+			}
+
+			Iter++;
 		}
 
 		/// <summary>
@@ -72,23 +73,23 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 		/// </summary>
 		void ComputeDelta()
 		{
-			int l = nn.N_Layers - 1;
+			int l = NN.N_Layers - 1;
 
 			// for output layer
-			for(int i = 0; i < nn.N_Outputs; i++)
+			for(int i = 0; i < NN.N_Outputs; i++)
 			{
-				nn[l][i].Delta = nn[l][i].OutputPrime * e[i];
+				NN[l][i].Delta = NN[l][i].OutputPrime * Per.Err[i];
 			}
 
 			// for other layer
 			for (l--; l >= 0; l--)
 			{
-				for (int j = 0; j < nn[l].N_Neurons; j++)
+				for (int j = 0; j < NN[l].N_Neurons; j++)
 				{
 					double sk = 0;
-					for (int k = 0; k < nn[l + 1].N_Neurons; k++)
-						sk += nn[l + 1][k].Delta * nn[l + 1][k][j].Weight;
-					nn[l][j].Delta = nn[l][j].OutputPrime * sk;
+					for (int k = 0; k < NN[l + 1].N_Neurons; k++)
+						sk += NN[l + 1][k].Delta * NN[l + 1][k][j].Weight;
+					NN[l][j].Delta = NN[l][j].OutputPrime * sk;
 				}
 			}
 		}
@@ -98,16 +99,17 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 		/// </summary>
 		void setWeight()
 		{
-			for (int i = 1; i < nn.N_Layers; i++)
+			for (int i = 1; i < NN.N_Layers; i++)
 			{
-				Layer layer = nn[i];
+				Layer layer = NN[i];
 				for(int j = 0; j < layer.N_Neurons; j++)
 				{
 					Neuron neuron = layer[j];
 					foreach(Axon ax in neuron)
 					{
-						ax.Weight += _nuy * neuron.Delta * ax.InputNeuron.Value;
+						ax.Weight += _nuy * neuron.Delta * ax.InputNeuron.Value ;
 					}
+					neuron.InputValue += _nuy * neuron.Delta;
 				}
 			}
 		}

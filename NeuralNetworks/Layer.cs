@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoNeuralNetwork.NeuralNetworks.ActivationFunctions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DemoNeuralNetwork.NeuralNetworks
 {
-	public class Layer : List<Neuron>, IElement
+	public class Layer : Element<Neuron>
 	{
 		#region Protected Properties
 		
@@ -14,7 +15,6 @@ namespace DemoNeuralNetwork.NeuralNetworks
 
 		#region Public Properties
 
-		public string Id { get; set; }
 		/// <summary>
 		/// Number of Neuron on this layer
 		/// </summary>
@@ -31,12 +31,8 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// <summary>
 		/// Create new Layer
 		/// </summary>
-		Layer(string Id)
+		Layer(string Id) : base(Id)
 		{
-			this.Id = Id;
-#if DEBUG_BUILD_NN
-			Console.WriteLine("Layer ID : " + Id);
-#endif
 		}
 
 		/// <summary>
@@ -44,17 +40,16 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// </summary>
 		/// <param name="preLayer">Pre Layer</param>
 		/// <param name="nn">Number of Neuron on this layer</param>
-		public Layer(string Id, int nn, Layer preLayer, Random Rand) : this(Id)
+		public Layer(string Id, ActivationFunc ac, int nn, Layer preLayer, Random Rand) : this(Id)
 		{
 			for (int i = 0; i < nn; i++)
 			{
-				Neuron n = new Neuron(Id + "_" + i);
-				foreach(Neuron preNeuron in preLayer)
+				Neuron n = new Neuron(Id + "_" + i, ac);
+				n.InputValue = Rand.NextDouble() * 2 - 1;		//[-1; 1]
+				foreach (Neuron preNeuron in preLayer)
 				{
 					Axon ax = new Axon(preNeuron.Id + "->" + n.Id, Rand, preNeuron, n);
-#if DEBUG_BUILD_NN
-					ax.Print();
-#endif
+
 					n.Add(ax);
 				}
 				this.Add(n);
@@ -65,22 +60,37 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// Create Input Layer
 		/// </summary>
 		/// <param name="n_input">Number of input neuron</param>
-		public Layer(string Id, int n_input) : this(Id)
+		public Layer(string Id, ActivationFunc ac, int n_input) : this(Id)
 		{
 			for(int i = 0; i < n_input; i++)
 			{
-				Neuron n = new Neuron(Id + "_" + i);
+				Neuron n = new Neuron(Id + "_" + i, ac);
 				this.Add(n);
 			}
 		}
 		#endregion
 
-		public void Reset()
+		public override void Reset()
 		{
 			foreach(Neuron n in this)
 			{
 				n.Reset();
 			}
+		}
+
+		public override string PrintInfo()
+		{
+			string s = "";
+			s += "========================\n";
+			s += "ID: " + Id + "\n";
+			s += "Number neuron: " + N_Neurons + "\n";
+
+			foreach(Neuron n in this)
+			{
+				s += n.PrintInfo();
+			}
+
+			return s;
 		}
 	}
 }

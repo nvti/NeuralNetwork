@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms;
-
+using DemoNeuralNetwork.NeuralNetworks.ActivationFunctions;
 namespace DemoNeuralNetwork.NeuralNetworks
 {
-	public class NeuralNetwork : List<Layer>, IElement
+	public class NeuralNetwork : Element<Layer>
 	{
 		#region Public properties
-
-		public string Id { get; set; }
 
 		/// <summary>
 		/// Get number of Input
@@ -52,6 +50,10 @@ namespace DemoNeuralNetwork.NeuralNetworks
 			{
 				la = value;
 			}
+			get
+			{
+				return la;
+			}
 		}
 		/// <summary>
 		/// Get list of output
@@ -90,7 +92,7 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		{
 			la = new BackPropagationLearningAlgorithm(this);
 			this.N_Neuron = N_Neuron;
-			CreateNeuralNetwork(N_Layer);
+			CreateNeuralNetwork(N_Layer, ActivationFunc.SIDMOID);
 		}
 		/// <summary>
 		/// Create Neural Network with fixed number layer and learning algorithm
@@ -98,11 +100,12 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// <param name="N_Neuron">List number of neuron on each layer</param>
 		/// <param name="N_Layer">Number of layer</param>
 		/// <param name="la">Learning algorithm</param>
-		public NeuralNetwork(List<int> N_Neuron, int N_Layer, LearningAlgorithm la)
+		public NeuralNetwork(List<int> N_Neuron, int N_Layer, LearningAlgorithm la, ActivationFunc ac)
 		{
 			this.la = la;
+			this.la.NN = this;
 			this.N_Neuron = N_Neuron;
-			CreateNeuralNetwork(N_Layer);
+			CreateNeuralNetwork(N_Layer, ac);
 		}
 		#endregion
 
@@ -111,13 +114,13 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// Create layers of this neural network
 		/// </summary>
 		/// <param name="count">Number of layer</param>
-		protected void CreateNeuralNetwork(int count)
+		protected void CreateNeuralNetwork(int count, ActivationFunc ac)
 		{
-			Layer l = new Layer("0", N_Neuron[0]);
+			Layer l = new Layer("0", ac, N_Neuron[0]);
 			this.Add(l);
 			for (int i = 1; i < count; i++)
 			{
-				Layer layer = new Layer(i + "", N_Neuron[i], this[i - 1], rand);
+				Layer layer = new Layer(i + "", ac, N_Neuron[i], this[i - 1], rand);
 				this.Add(layer);
 			}
 		}
@@ -159,7 +162,10 @@ namespace DemoNeuralNetwork.NeuralNetworks
 			return output;
 		}
 
-		public void Reset()
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Reset()
 		{
 			foreach(var l in this)
 			{
@@ -170,11 +176,24 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// To train the neuronal network on data.
 		/// inputs[n] represents an input vector of the neural network and expected_outputs[n] the expected ouput for this vector.
 		/// </summary>
-		/// <param name="inputs">Input matrix</param>
-		/// <param name="expected_outputs">Expected Output matrix</param>
-		public void Learn(List<List<double>> inputs, List<List<double>> expected_outputs)
+		public void Learn()
 		{
-			la.Learn(inputs, expected_outputs);
+			la.Learn();
+		}
+
+		public override string PrintInfo()
+		{
+			string s = "";
+			s += "Number input: " + N_Inputs + "\n";
+			s += "Number output: " + N_Outputs + "\n";
+			s += "Number layer: " + N_Layers + "\n";
+
+			foreach(Layer l in this)
+			{
+				s += l.PrintInfo();
+			}
+
+			return s;
 		}
 	}
 }
