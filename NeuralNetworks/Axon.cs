@@ -10,7 +10,7 @@ namespace DemoNeuralNetwork.NeuralNetworks
 	{
 		public double Weight { set; get; }
 		public Neuron OutputNeuron { set; get; }
-		public Neuron InputNeuron { set; get; }
+		public IInputValue InputNeuron { set; get; }
 		public string Id { get; set; }
 
 		public double Value
@@ -21,12 +21,21 @@ namespace DemoNeuralNetwork.NeuralNetworks
 			}
 		}
 		
+		/// <summary>
+		/// Delta parameter for BackPropagation
+		/// </summary>
+		public double Delta
+		{
+			get; set;
+		}
+
 		#region Construction
 		Axon(string Id)
 		{
 			this.Id = Id;
+			Delta = 0;
 		}
-		Axon(string Id, Neuron input, Neuron output) : this(Id)
+		Axon(string Id, IInputValue input, Neuron output) : this(Id)
 		{
 			InputNeuron = input;
 			OutputNeuron = output;
@@ -41,7 +50,7 @@ namespace DemoNeuralNetwork.NeuralNetworks
 			Weight = w;
 		}
 
-		public Axon(string Id, Random rand, Neuron input, Neuron output) : this(Id, input, output)
+		public Axon(string Id, Random rand, IInputValue input, Neuron output) : this(Id, input, output)
 		{
 			Weight = rand.NextDouble() * 2 - 1;     // [-1, 1]
 		}

@@ -10,10 +10,9 @@ namespace DemoNeuralNetwork.NeuralNetworks
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Neuron : Element<Axon>
+	public class Neuron : Element<Axon>, IInputValue
 	{
 		#region Public Properties
-		public double InputValue { get; set; }
 		public bool IsInputChanged { get; set; }
 		/// <summary>
 		/// Get Output of Neuron
@@ -24,8 +23,15 @@ namespace DemoNeuralNetwork.NeuralNetworks
 			{
 				return _value = IsInputChanged ? Calculate() : _value;
 			}
+			set
+			{
+
+			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public double OutputPrime
 		{
 			get
@@ -66,12 +72,14 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// Create new Neuron with fixed Activation Function
 		/// </summary>
 		/// <param name="af">Activation function</param>
-		public Neuron(string Id, ActivationFunc af = ActivationFunc.SIDMOID)
+		public Neuron(string Id, Random Rand, ActivationFunc af = ActivationFunc.SIDMOID)
 		{
 			IsInputChanged = true;
 			this.Id = Id;
 
 			this.af = ActivationFunction.Create(af);
+
+			this.Add(new Axon("Bias", Rand, new InputValue(1), this));
 		}
 		#endregion
 
@@ -87,16 +95,10 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		double Calculate()
 		{
 			double result;
-			if(this.Count == 0)
-			{
-				result = ws = InputValue;
-			}
-			else
-			{
-				ws = this.Sum(a => a.Weight * a.InputNeuron.Value);
-				if (af == null) result = ws;
-				else result = af.Output(ws);
-			}
+
+			ws = this.Sum(a => a.Weight * a.InputNeuron.Value);
+			if (af == null) result = ws;
+			else result = af.Output(ws);
 
 			IsInputChanged = false;
 			return result;
@@ -107,7 +109,6 @@ namespace DemoNeuralNetwork.NeuralNetworks
 			string s = "";
 			s += "\tID: " + Id + "\n";
 			s += "\tValue: " + Value + '\n';
-			s += "\tInput value: " + InputValue + '\n';
 
 			foreach(Axon ax in this)
 			{

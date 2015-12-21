@@ -47,11 +47,12 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 		public LearningAlgorithm()
 		{
 			Iter = 0;
+			Error = 1;
 		}
 
 		public LearningAlgorithm(NeuralNetwork nn)
 		{
-			Error = -1;
+			Error = 1;
 			this.NN = nn;
 		}
 

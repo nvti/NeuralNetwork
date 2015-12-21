@@ -65,6 +65,21 @@ namespace DemoNeuralNetwork.NeuralNetworks
 				return GetOutput();
 			}
 		}
+
+		public List<double> InputLayer
+		{
+			set
+			{
+				if(value.Count == N_Inputs)
+				{
+					for(int i = 0; i < N_Inputs; i++)
+					{
+						this[0][i].Value = value[i];
+					}
+				}
+				Reset();
+			}
+		}
 		#endregion
 
 		#region Protected Properties
@@ -72,6 +87,10 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// Number of neuron on each layer
 		/// </summary>
 		protected List<int> N_Neuron { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		//public InputLayer _inputlayer;
 		/// <summary>
 		/// For random weight of Axon
 		/// </summary>
@@ -116,35 +135,15 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// <param name="count">Number of layer</param>
 		protected void CreateNeuralNetwork(int count, ActivationFunc ac)
 		{
-			Layer l = new Layer("0", ac, N_Neuron[0]);
+			Layer l = new Layer("0", N_Neuron[0]);
 			this.Add(l);
+
 			for (int i = 1; i < count; i++)
 			{
 				Layer layer = new Layer(i + "", ac, N_Neuron[i], this[i - 1], rand);
 				this.Add(layer);
 			}
 		}
-
-		/// <summary>
-		/// Make Input of Neural Network
-		/// </summary>
-		/// <param name="input">List of input</param>
-		public void CreateInput(List<double> input)
-		{
-			Reset();
-			Layer input_layer = this[0];        // Input layer
-			if (input.Count < input_layer.Count)
-			{
-				Console.WriteLine("Not enough number of input.");
-				throw new Exception("");
-			}
-			int index = 0;
-			foreach(Neuron n in input_layer)
-			{
-				n.InputValue = input[index++];
-			}
-		}
-
 
 		/// <summary>
 		/// Get list of output

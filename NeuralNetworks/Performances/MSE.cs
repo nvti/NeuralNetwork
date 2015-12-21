@@ -15,7 +15,7 @@ namespace DemoNeuralNetwork.NeuralNetworks.Performances
 
 			for(int i = 0; i < output.Count; i++)
 			{
-				this.Err.Add(output[i] - target[i]);
+				this.Err.Add(target[i] - output[i]);
 				err += Err[i] * Err[i];
 			}
 

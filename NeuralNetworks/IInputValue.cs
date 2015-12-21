@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DemoNeuralNetwork.NeuralNetworks
 {
-	public interface IElement
+	public interface IInputValue
 	{
+		double Value { get; set; }
 		string Id { get; set; }
-
-		void Reset();
+		string PrintInfo();
 	}
 }

@@ -14,9 +14,9 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 		protected double _nuy = 0.5;
 
 		/// <summary>
-		/// List of error
+		/// 
 		/// </summary>
-		//double[] e;
+		protected double _beta = 0.5;
 
 		/// <summary>
 		/// Get/set nuy param of Back Propagation Learning Algorithm
@@ -55,7 +55,7 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 			this.Error = 0;
 			for (int i = 0; i < Inputs.Count; i++)
 			{
-				NN.CreateInput(Inputs[i]);
+				NN.InputLayer = Inputs[i];
 
 				double err = Per.Error(NN.Outputs, Outputs[i]);
 
@@ -64,7 +64,7 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 				ComputeDelta();
 				setWeight();
 			}
-
+			this.Error /= Outputs.Count;
 			Iter++;
 		}
 
@@ -78,18 +78,23 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 			// for output layer
 			for(int i = 0; i < NN.N_Outputs; i++)
 			{
-				NN[l][i].Delta = NN[l][i].OutputPrime * Per.Err[i];
+				Neuron n = (Neuron)NN[l][i];
+				n.Delta = n.OutputPrime * Per.Err[i];
 			}
 
 			// for other layer
-			for (l--; l >= 0; l--)
+			for (l--; l > 0; l--)
 			{
 				for (int j = 0; j < NN[l].N_Neurons; j++)
 				{
 					double sk = 0;
 					for (int k = 0; k < NN[l + 1].N_Neurons; k++)
-						sk += NN[l + 1][k].Delta * NN[l + 1][k][j].Weight;
-					NN[l][j].Delta = NN[l][j].OutputPrime * sk;
+					{
+						Neuron n = (Neuron)NN[l + 1][k];
+						sk += n.Delta * n[j].Weight;
+					}
+					Neuron nn = (Neuron)NN[l][j];
+					nn.Delta = nn.OutputPrime * sk;
 				}
 			}
 		}
@@ -104,12 +109,12 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 				Layer layer = NN[i];
 				for(int j = 0; j < layer.N_Neurons; j++)
 				{
-					Neuron neuron = layer[j];
+					Neuron neuron = (Neuron)layer[j];
 					foreach(Axon ax in neuron)
 					{
-						ax.Weight += _nuy * neuron.Delta * ax.InputNeuron.Value ;
+						ax.Delta = _nuy * neuron.Delta * ax.InputNeuron.Value + _beta* ax.Delta;
+						ax.Weight += ax.Delta ;
 					}
-					neuron.InputValue += _nuy * neuron.Delta;
 				}
 			}
 		}

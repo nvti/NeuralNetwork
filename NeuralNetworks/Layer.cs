@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DemoNeuralNetwork.NeuralNetworks
 {
-	public class Layer : Element<Neuron>
+	public class Layer : Element<IInputValue>
 	{
 		#region Protected Properties
 		
@@ -44,9 +44,8 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		{
 			for (int i = 0; i < nn; i++)
 			{
-				Neuron n = new Neuron(Id + "_" + i, ac);
-				n.InputValue = Rand.NextDouble() * 2 - 1;		//[-1; 1]
-				foreach (Neuron preNeuron in preLayer)
+				Neuron n = new Neuron(Id + "_" + i, Rand, ac);
+				foreach (IInputValue preNeuron in preLayer)
 				{
 					Axon ax = new Axon(preNeuron.Id + "->" + n.Id, Rand, preNeuron, n);
 
@@ -60,11 +59,11 @@ namespace DemoNeuralNetwork.NeuralNetworks
 		/// Create Input Layer
 		/// </summary>
 		/// <param name="n_input">Number of input neuron</param>
-		public Layer(string Id, ActivationFunc ac, int n_input) : this(Id)
+		public Layer(string Id, int n_input) : this(Id)
 		{
 			for(int i = 0; i < n_input; i++)
 			{
-				Neuron n = new Neuron(Id + "_" + i, ac);
+				InputValue n = new InputValue(Id + "_" + i);
 				this.Add(n);
 			}
 		}
@@ -72,9 +71,12 @@ namespace DemoNeuralNetwork.NeuralNetworks
 
 		public override void Reset()
 		{
-			foreach(Neuron n in this)
+			foreach(IInputValue n in this)
 			{
-				n.Reset();
+				if(n is Neuron)
+				{
+					((Neuron)n).Reset(); ;
+				}
 			}
 		}
 
@@ -85,7 +87,7 @@ namespace DemoNeuralNetwork.NeuralNetworks
 			s += "ID: " + Id + "\n";
 			s += "Number neuron: " + N_Neurons + "\n";
 
-			foreach(Neuron n in this)
+			foreach(IInputValue n in this)
 			{
 				s += n.PrintInfo();
 			}
