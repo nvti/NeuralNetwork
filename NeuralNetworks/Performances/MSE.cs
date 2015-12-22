@@ -19,7 +19,7 @@ namespace DemoNeuralNetwork.NeuralNetworks.Performances
 				err += Err[i] * Err[i];
 			}
 
-			return err;
+			return Math.Sqrt(err);
 		}
 	}
 }

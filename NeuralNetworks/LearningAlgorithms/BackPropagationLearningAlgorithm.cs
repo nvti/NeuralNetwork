@@ -27,6 +27,11 @@ namespace DemoNeuralNetwork.NeuralNetworks.LearningAlgorithms
 			set { _nuy = (value > 0) ? value : _nuy; }
 		}
 
+		public double Beta
+		{
+			get { return _beta; }
+			set { _beta = (value > 0) ? value : _beta; }
+		}
 		public BackPropagationLearningAlgorithm() : base()
 		{
 
