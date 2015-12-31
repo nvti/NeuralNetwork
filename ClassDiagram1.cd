@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="NeuralNetwork.ActivationFunctions.ActivationFunction" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAIAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\ActivationFunctions\ActivationFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.ActivationFunctions.ArcTan" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\ActivationFunctions\ArcTan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.ActivationFunctions.Gaussian" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\ActivationFunctions\Gaussian.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.ActivationFunctions.SigmoidFunction" Collapsed="true">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIBAAAAIQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\ActivationFunctions\SigmoidFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.ActivationFunctions.Sinc" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\ActivationFunctions\Sinc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.ActivationFunctions.TanhFunction" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\ActivationFunctions\TanhFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.Lists.Axon" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAAAAAAAAIAAEAAAAAAACCAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Axon.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="NeuralNetwork.Lists.InputValue" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Lists\InputValue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="NeuralNetwork.Lists.Layer" Collapsed="true">
+    <Position X="0.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Lists\Layer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.Lists.ListElement&lt;T&gt;" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAEAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Lists\ListElement.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NeuralNetwork.Lists.NeuralNetwork" Collapsed="true">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQEIIABACAABAgAAAAAAAAAAAEAAAAAAAEAhAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Lists\NeuralNetwork.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.Lists.Neuron" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBAEAAAAAAAAJAAACAAAAAAAAKEAAAAAAQAgAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Lists\Neuron.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="NeuralNetwork.LearningAlgorithms.BackPropagationLearningAlgorithm" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAAAAEAACAAAAAAAAAAAAAEARAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\LearningAlgorithms\BackPropagationLearningAlgorithm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.LearningAlgorithms.GeneticLearningAlgorithm" Collapsed="true">
+    <Position X="2.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\LearningAlgorithms\GeneticLearningAlgorithm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.LearningAlgorithms.LearningAlgorithm" Collapsed="true">
+    <Position X="1.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RgAAgAAAAAAACQEAACAAAAAAEBAEAEAAAAAAgAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\LearningAlgorithms\LearningAlgorithm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.Performances.MSE" Collapsed="true">
+    <Position X="5.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Performances\MSE.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NeuralNetwork.Performances.Performance" Collapsed="true">
+    <Position X="5.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAEgAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Performances\Performance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="NeuralNetwork.Lists.IInputValue" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\Lists\IInputValue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="NeuralNetwork.IElement" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\IElement.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="NeuralNetwork.ActivationFunctions.ActivationFunc" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAgAAAAAAADgAAA=</HashCode>
+      <FileName>NeuralNetworks\ActivationFunctions\ActivationFunction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="NeuralNetwork.LearningAlgorithms.LearningAlthm" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NeuralNetworks\LearningAlgorithms\LearningAlgorithm.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="NeuralNetwork.Performances.Perform" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>NeuralNetworks\Performances\Performance.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
